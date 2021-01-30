@@ -17,28 +17,10 @@
             Release date:
             <input type="date" name="release_date">
         </label>
-{{--TODO use Vue to add film to many categories--}}
-        <label for="genre">
-            Genre:
-            <select name="genres" id="genres">
-                @foreach($genres as ['id' => $id, 'name' => $name])
-                    <option value={{ $id }}>
-                        {{ $name }}
-                    </option>
-                @endforeach
-            </select>
-        </label>
+        <added-genres v-bind:genres={{ $genres }}></added-genres>
 
         <button type="submit">
             Save
         </button>
     </form>
 @endsection
-
-
-{{--@section('script')--}}
-{{--    <script>--}}
-
-{{--    </script>--}}
-{{--@endsection--}}
-

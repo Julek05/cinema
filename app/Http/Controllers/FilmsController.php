@@ -61,9 +61,10 @@ class FilmsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $genres = explode(',', $request->get('genres'));
+
         try {
-            Film::saveFilm($request->except('_token', 'genres'),
-                $request->get('genres'));
+            Film::saveFilm($request->except('_token', 'genres'), $genres);
         } catch (\Exception $exception) {
             return back()->with(['error' => 'Film adding failed']);
         }

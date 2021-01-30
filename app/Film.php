@@ -16,18 +16,16 @@ class Film extends Model
 
     /**
      * @param mixed[] $film
-//     * @param int[] $genres
-     * @param string $genres
+     * @param string[] $genres
      */
-//    public static function saveFilm(array $film, array $genres): void
-    public static function saveFilm(array $film, string $genres): void
+    public static function saveFilm(array $film, array $genres): void
     {
        $film = Film::create($film);
 
-       $film->genres()->attach([(int)$genres]);
+       $film->genres()->attach($genres);
     }
 
-    public static function deleteFilm(int $id)
+    public static function deleteFilm(int $id): void
     {
         $film = self::findOrFail($id);
 
