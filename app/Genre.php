@@ -22,7 +22,6 @@ class Genre extends Model
             ->where('active', ACTIVE)
             ->orderBy('order')
             ->get();
-//            ->pluck('name', 'id');
     }
 
     public function films(): BelongsToMany

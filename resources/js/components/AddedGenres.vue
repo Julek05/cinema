@@ -12,8 +12,9 @@
         <input type="hidden" name="genres" :value="addedGenres">
 
         <ul>
-            <li v-for="(addedGenre) in addedGenres">
+            <li v-for="(addedGenre, index) in addedGenres" :key="index">
                 {{ genres[parseInt(addedGenre) - 1].name }}
+                <button type="button" @click="deleteGenre(index)">X</button>
             </li>
         </ul>
     </div>
@@ -34,6 +35,10 @@
                 if (! this.addedGenres.includes(genreId) && genreId !== '-1') {
                     this.addedGenres.push(genreId);
                 }
+            },
+
+            deleteGenre(index) {
+                this.addedGenres.splice(index, 1);
             }
         }
     }
