@@ -16,33 +16,8 @@ class Genre extends Model
         'active'
     ];
 
-    public static function getGenres(): Collection
-    {
-        return self::select('id', 'name')
-            ->where('active', ACTIVE)
-            ->orderBy('order')
-            ->get();
-    }
-
     public function films(): BelongsToMany
     {
         return $this->belongsToMany(Film::class, 'films_genres');
-    }
-
-    public static function getFilmsByGenre(string $genre): self
-    {
-        return self::where('name', $genre)
-            ->with(['films' => function($query) {
-                $query->orderByDesc('id');
-            }])
-            ->firstOrFail();
-    }
-
-    public function getAllFilms(): Collection
-    {
-        return self::where('active', ACTIVE)
-            ->has('films')
-            ->with('films')
-            ->get();
     }
 }
