@@ -25,8 +25,7 @@
 
         data() {
             return {
-                addedGenres: this.$props.genres.map(genre => genre.id),
-
+                addedGenres: this.$attrs.actuallyaddedgenres,
             }
         },
 

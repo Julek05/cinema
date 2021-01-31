@@ -6,6 +6,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 class Film extends Model
 {
@@ -17,12 +18,22 @@ class Film extends Model
     /**
      * @param mixed[] $film
      * @param string[] $genres
+     * @return array
      */
-    public static function saveFilm(array $film, array $genres): void
+    public static function saveFilm(array $film, array $genres): array
     {
-       $film = Film::create($film);
+        DB::beginTransaction();
+        try {
+            $film = self::create($film);
 
-       $film->genres()->attach($genres);
+            $film->genres()->attach($genres);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return ['error' => 'Film adding failed'];
+        }
+
+        DB::commit();
+        return ['success' => 'Film added'];
     }
 
     public static function deleteFilm(int $id): void
@@ -38,6 +49,31 @@ class Film extends Model
         return self::with('genres')
             ->where('id', $id)
             ->firstOrFail();
+    }
+
+    /**
+     * @param array $updatedFilm
+     * @param string[] $genres
+     * @param int $id
+     * @return array
+     */
+    public static function updateFilm(array $updatedFilm, array $genres, int $id): array
+    {
+        DB::beginTransaction();
+        try {
+            $actualFilm = self::findOrFail($id);
+
+            $actualFilm->update($updatedFilm);
+
+            $actualFilm->genres()->sync($genres);
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return ['error' => 'Film editing failed'];
+        }
+
+        DB::commit();
+        return ['success' => 'Film edited'];
     }
 
     public function genres(): BelongsToMany

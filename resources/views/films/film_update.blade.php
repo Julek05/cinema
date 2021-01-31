@@ -17,8 +17,7 @@
             Release date:
             <input type="date" name="release_date" value={{ $film->release_date }}>
         </label>
-
-        <added-genres :genres={{ $film->genres }} ></added-genres>
+        <added-genres :genres={{ $genres }} :actuallyAddedGenres={{ $film->genres->pluck('id') }}></added-genres>
 
         <button type="submit">
             Save

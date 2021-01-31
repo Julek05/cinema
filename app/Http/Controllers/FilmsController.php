@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Film;
 use App\Genre;
+use App\Traits\FilmsTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +16,8 @@ use Illuminate\View\View;
 
 class FilmsController extends Controller
 {
+    use FilmsTrait;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -61,7 +64,7 @@ class FilmsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $genres = explode(',', $request->get('genres'));
+        $genres = $this->getGenresFromString($request->get('genres'));
 
         $responseMessage = Film::saveFilm($request->except('_token', 'genres'), $genres);
 
@@ -89,7 +92,9 @@ class FilmsController extends Controller
     {
         $film = Film::getFilm((int) $id);
 
-        return view('films.film_update', compact('film'));
+        $genres = Genre::getGenres();
+
+        return view('films.film_update', compact('film', 'genres'));
     }
 
     /**
@@ -101,7 +106,11 @@ class FilmsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($request->all(), $id);
+        $genres = $this->getGenresFromString($request->get('genres'));
+
+        $responseMessage = Film::updateFilm($request->except('token', 'genres'), $genres, (int) $id);
+
+        return back()->with($responseMessage);
     }
 
     /**

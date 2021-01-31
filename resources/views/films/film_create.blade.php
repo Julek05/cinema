@@ -6,7 +6,7 @@
         List of films
     </a>
 
-    <form action={{ route('film_store') }} method="post">
+    <form action="{{ route('film_store') }}" method="post">
         @csrf
         <label for="title">
             Title:
@@ -17,7 +17,7 @@
             Release date:
             <input type="date" name="release_date">
         </label>
-        <added-genres :genres={{ $genres }}></added-genres>
+        <added-genres :genres={{ $genres }} :actuallyAddedGenres={{ json_encode([]) }} ></added-genres>
 
         <button type="submit">
             Save
