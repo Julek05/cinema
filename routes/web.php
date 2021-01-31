@@ -13,6 +13,8 @@ Route::prefix('film')->group(function () {
     Route::get('/create', [FilmsController::class, 'create'])->name('film_create');
     Route::post('/store', [FilmsController::class, 'store'])->name('film_store');
     Route::post('/delete/{id}', [FilmsController::class, 'destroy'])->name('film_delete');
+    Route::get('/edit/{id}', [FilmsController::class, 'edit'])->name('film_edit');
+    Route::post('/update/{id}', [FilmsController::class, 'update'])->name('film_update');
 });
 
 Route::get('/all_films', [FilmsController::class, 'getAllFilms'])

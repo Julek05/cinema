@@ -13,7 +13,7 @@
 
         <ul>
             <li v-for="(addedGenre, index) in addedGenres" :key="index">
-                {{ genres[parseInt(addedGenre) - 1].name }}
+                {{ genres.find(genre => genre.id === addedGenre).name }}
                 <button type="button" @click="deleteGenre(index)">X</button>
             </li>
         </ul>
@@ -25,14 +25,15 @@
 
         data() {
             return {
-                addedGenres: [],
+                addedGenres: this.$props.genres.map(genre => genre.id),
+
             }
         },
 
         methods: {
             addGenre(event) {
-                const genreId = event.target.value;
-                if (! this.addedGenres.includes(genreId) && genreId !== '-1') {
+                const genreId = parseInt(event.target.value);
+                if (! this.addedGenres.includes(genreId) && genreId !== -1) {
                     this.addedGenres.push(genreId);
                 }
             },

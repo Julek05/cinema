@@ -63,12 +63,9 @@ class FilmsController extends Controller
     {
         $genres = explode(',', $request->get('genres'));
 
-        try {
-            Film::saveFilm($request->except('_token', 'genres'), $genres);
-        } catch (\Exception $exception) {
-            return back()->with(['error' => 'Film adding failed']);
-        }
-        return back()->with(['success' => 'Film added']);
+        $responseMessage = Film::saveFilm($request->except('_token', 'genres'), $genres);
+
+        return back()->with($responseMessage);
     }
 
     /**
@@ -85,24 +82,26 @@ class FilmsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  string  $id
+     * @return Application|Factory|Response|View
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        //
+        $film = Film::getFilm((int) $id);
+
+        return view('films.film_update', compact('film'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param  string  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        //
+        dd($request->all(), $id);
     }
 
     /**

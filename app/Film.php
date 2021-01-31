@@ -33,6 +33,13 @@ class Film extends Model
         $film->delete();
     }
 
+    public static function getFilm(int $id): self
+    {
+        return self::with('genres')
+            ->where('id', $id)
+            ->firstOrFail();
+    }
+
     public function genres(): BelongsToMany
     {
         return $this->belongsToMany(Genre::class, 'films_genres');
