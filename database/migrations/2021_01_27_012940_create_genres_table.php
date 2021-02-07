@@ -16,7 +16,6 @@ class CreateGenresTable extends Migration
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->tinyInteger('order')->unique();
             $table->enum('active', [INACTIVE, ACTIVE]);
 
             $table->timestamps();

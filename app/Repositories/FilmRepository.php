@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repostiories;
+namespace App\Repositories;
 
 use App\Contracts\FilmRepositoryInterface;
 use App\Film;

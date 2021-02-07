@@ -7,6 +7,7 @@
     </a>
 
     <form action={{ route('film_update', [$film->id]) }} method="post">
+        <input type="hidden" name="_method" value="put">
         @csrf
         <label for="title">
             Title:

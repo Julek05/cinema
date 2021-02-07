@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilmsController;
+`use App\Http\Controllers\GenresController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -9,16 +10,22 @@ Route::get('/', fn() => Redirect::to(route('film_create')));
 
 Auth::routes();
 
-Route::prefix('film')->group(function () {
+Route::prefix('films')->group(function () {
+    Route::get('/', [FilmsController::class, 'getAllFilms'])->name('all_films');
     Route::get('/create', [FilmsController::class, 'create'])->name('film_create');
-    Route::post('/store', [FilmsController::class, 'store'])->name('film_store');
-    Route::post('/delete/{id}', [FilmsController::class, 'destroy'])->name('film_delete');
+    Route::post('/', [FilmsController::class, 'store'])->name('film_store');
+    Route::delete('/{id}', [FilmsController::class, 'destroy'])->name('film_delete');
     Route::get('/edit/{id}', [FilmsController::class, 'edit'])->name('film_edit');
-    Route::post('/update/{id}', [FilmsController::class, 'update'])->name('film_update');
+    Route::put('/{id}', [FilmsController::class, 'update'])->name('film_update');
+    Route::get('/{genre}', [FilmsController::class, 'getFilmsByGenre'])->name('films_for_genre');
 });
 
-Route::get('/all_films', [FilmsController::class, 'getAllFilms'])
-    ->name('all_films');
+Route::prefix('genres')->group(function () {
+    Route::get('/', [GenresController::class, 'getAllGenres'])->name('all_genres');
+    Route::get('/create', [GenresController::class, 'create'])->name('genre_create');
+    Route::post('/', [GenresController::class, 'store'])->name('genre_store');
+    Route::delete('/{id}', [GenresController::class, 'destroy'])->name('genre_delete');
+    Route::get('/edit/{id}', [GenresController::class, 'edit'])->name('genre_edit');
+    Route::put('/{id}', [GenresController::class, 'update'])->name('genre_update');
+});
 
-    Route::get('{genre}/films', [FilmsController::class, 'getFilmsByGenre'])
-        ->name('films_for_genre');

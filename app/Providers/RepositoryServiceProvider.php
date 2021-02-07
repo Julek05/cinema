@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Contracts\FilmRepositoryInterface;
 use App\Contracts\GenreRepositoryInterface;
-use App\Repostiories\FilmRepository;
-use App\Repostiories\GenreRepository;
+use App\Repositories\FilmRepository;
+use App\Repositories\GenreRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
