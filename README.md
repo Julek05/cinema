@@ -1,13 +1,30 @@
-Cinema Project<br/><br/>
+# CRUD Cinema Project
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
 
-Admin Panel to add and manage films and other settings<br/><br/>
+## General info
+Project in progress.<br/><br/>
+Admin Panel to add, manage films and much more.<br/><br/>
+Site for users to check information about films and book seats in the cinema.
 
-Site for users to show informations about films and book seat for film<br/><br/>
 
-<p>Stack:</p> 
-<ul>
-	<li>PHP 7.4</li>
-	<li>Laravel 7 MVC</li>
-	<li>Vue JavaScript</li>
-	<li>Bootstrap</li>
-</ul>
+## Technologies
+Project is created with:
+* PHP version: 7.4
+* Laravel version: 7.0
+* Vue.js version: 2.5
+* Bootstrap version: 4.0
+
+## Setup
+To run this project:
+
+```
+composer install
+configure database and .env file
+php artisan migrate
+php artisan serve
+npm install
+npm run dev
+
